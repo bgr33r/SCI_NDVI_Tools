@@ -36,13 +36,13 @@ def get_value_at_ndvi(ndvi_raster, pos):
     #print(out)
     return(out)
 
-data_dir = os.path.expanduser('~\\PycharmProjects\\SCI\\test_data\\')
+data_dir = os.path.expanduser('C://path//to//folder//')
 os.chdir(data_dir)
 
 plots = reprojSites('SCI.xlsx', 'site', 'plot', {'init': 'epsg:4326'}, {'init': 'epsg:26911'})
 
 #load in NDVI.tif
-NDVI = gdal.Open('C://Users//burke//PycharmProjects//SCI//test_data//Landsat//Santa_Cruz_Island//NDVI.tif')
+NDVI = gdal.Open('C://path//to//folder//NDVI.tif')
 #extract NDVI for each point in raster:
 plots['NDVI'] = get_value_at_ndvi(NDVI,plots)
 #save to .shp
