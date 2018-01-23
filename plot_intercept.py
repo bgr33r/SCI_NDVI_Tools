@@ -37,7 +37,7 @@ def get_value_at_ndvi(ndvi_raster, pos):
     gt = ndvi_raster.GetGeoTransform() #get geotransform from input raster for extraction below
     data = np.array(ndvi_raster.ReadAsArray()).astype(np.float) #convert to numpy array
     x,y = list(map(int, (pos.geometry.x - gt[0])/gt[1])),list(map(int, (pos.geometry.y - gt[3])/gt[5])) #extract xy list of features in pos
-    out = data[y,x] #create output
+    out = data[y,x] #create output - note that x and y are reversed
     #print(out)
     return(out)
 
