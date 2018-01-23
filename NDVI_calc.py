@@ -1,6 +1,6 @@
 ###NDVI_calc.py
 #By: Burke Greer
-#this file reads in B5, B4, and QA landsat images and calculates NDVI, anad produces projected geotiff
+#reads in B5, B4, and QA landsat images and calculates NDVI, anad produces projected geotiff
 
 #inputs for NDVI_calc:
 #sat_data_dir = the directory the landsat data is within
@@ -17,7 +17,7 @@ import matplotlib.pyplot as plt #for plotting test below
 
 def NDVI_calc(sat_data_dir, NIR_name, RED_name, BQA_name, Desired_NA_Value_for_BQA, new_NDVI_name):
     name_list = [(x,y,z) for x in NIR_name for y in RED_name for z in BQA_name] #TODO add correct pairing check
-    os.chdir(sat_data_dir) #TODO add arugements for output directory, for use input directory
+    os.chdir(sat_data_dir) #TODO add arg for output directory, input directory
     for i in name_list:
         NIR = gdal.Open(i[0])
         NIR_array = np.array(NIR.ReadAsArray()).astype(np.float)
@@ -27,7 +27,7 @@ def NDVI_calc(sat_data_dir, NIR_name, RED_name, BQA_name, Desired_NA_Value_for_B
         BQA_array = np.array(BQA.ReadAsArray()).astype(np.float)
         np.seterr(divide='ignore', invalid='ignore') #set to 'ignore' because NAs in NDVI will throw error
         NDVI_out = (NIR_array - RED_array) / (NIR_array + RED_array)
-        NDVI_out[BQA_array == 1] = Desired_NA_Value_for_BQA #change where BQA is 1 to desired NAN value (useful for plotting/scales)
+        NDVI_out[BQA_array == 1] = Desired_NA_Value_for_BQA #change where BQA is 1 to desired NAN value (useful for plotting/scales/stats)
         print(name_list, "Mean: ", np.nanmean(NDVI_out))
         #project NumPy array and export:
         driver = gdal.GetDriverByName('GTiff')
@@ -38,10 +38,9 @@ def NDVI_calc(sat_data_dir, NIR_name, RED_name, BQA_name, Desired_NA_Value_for_B
                                     gdal.GDT_Float64)  # datatype of the raster
         new_dataset.SetProjection(NIR.GetProjection())
         new_dataset.SetGeoTransform(NIR.GetGeoTransform())
-
-        # Now we need to set the band's nodata value to -1
+     
         new_band = new_dataset.GetRasterBand(1)
-        new_band.SetNoDataValue(-1)
+        new_band.SetNoDataValue(-1) # return band's nodata value to -1
         new_band.WriteArray(NDVI_out)
         return new_band
         new_dataset = None
