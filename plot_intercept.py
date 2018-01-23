@@ -12,6 +12,7 @@
 #inputs for get_value_at_ndvi:
 #ndvi_raster = raster file in same projection as point file (previous step reprojected so they match)
 #pos = is the point file which is the site data
+#!!! not written for batch processing yet
 
 import pandas as pd
 import os
@@ -34,8 +35,9 @@ def reprojSites(file_name, sheetname, keyname, sitecrs, NDVIcrs):
     return sitesreproj
 
 def get_value_at_ndvi(ndvi_raster, pos):
-    gt = ndvi_raster.GetGeoTransform() #get geotransform from input raster for extraction below
-    data = np.array(ndvi_raster.ReadAsArray()).astype(np.float) #convert to numpy array
+    #get geotransform from input raster(s) for extraction below
+    gt = ndvi_raster.GetGeoTransform() 
+    data = np.array(ndvi_raster.ReadAsArray()).astype(np.float) #convert to numpy array #TODO write for loop or list comprehension to set output from list of rasters
     x,y = list(map(int, (pos.geometry.x - gt[0])/gt[1])),list(map(int, (pos.geometry.y - gt[3])/gt[5])) #extract xy list of features in pos
     out = data[y,x] #create output - note that x and y are reversed
     #print(out)
