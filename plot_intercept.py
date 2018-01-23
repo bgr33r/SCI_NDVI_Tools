@@ -27,7 +27,7 @@ def reprojSites(file_name, sheetname, keyname, sitecrs, NDVIcrs):
     df.set_index(keys=keyname)
     #calculate geometry from lat long
     geometry = [Point(xy) for xy in zip(df.long, df.lat)]
-    Create geopandas dataframe and fill with plot data
+    #Create geopandas dataframe and fill with plot data
     sites = gpd.GeoDataFrame(df, crs=sitecrs, geometry=geometry)
     #reproject if needed
     sitesreproj = sites.to_crs(crs=NDVIcrs)
