@@ -1,6 +1,6 @@
 ###NDVI_calc.py
 #By: Burke Greer
-#reads in B5, B4, and QA landsat images and calculates NDVI, anad produces projected geotiff
+#reads in B5, B4, and QA landsat images and calculates NDVI, and produces projected geotiff
 
 #inputs for NDVI_calc:
 #sat_data_dir = the directory the landsat data is within
