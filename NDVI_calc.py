@@ -26,6 +26,7 @@ def NDVI_calc(sat_data_dir, NIR_name, RED_name, BQA_name, Desired_NA_Value_for_B
         RED_array = np.array(RED.ReadAsArray()).astype(np.float)
         BQA = gdal.Open(i[2])
         BQA_array = np.array(BQA.ReadAsArray()).astype(np.float)
+        #TODO slice output file name from input names
         np.seterr(divide='ignore', invalid='ignore') #set to 'ignore' because NAs in NDVI will throw error
         #Calculate NDVI
         NDVI_out = (NIR_array - RED_array) / (NIR_array + RED_array)
