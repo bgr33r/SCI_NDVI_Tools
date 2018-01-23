@@ -21,15 +21,20 @@ from osgeo import gdal
 import numpy as np
 
 def reprojSites(file_name, sheetname, keyname, sitecrs, NDVIcrs):
+    #read in plot,lat,long data
     df = pd.DataFrame(pd.read_excel(file_name, sheetname = sheetname))
+    #set primary key
     df.set_index(keys=keyname)
+    #calculate geometry from lat long
     geometry = [Point(xy) for xy in zip(df.long, df.lat)]
+    Create geopandas dataframe and fill with plot data
     sites = gpd.GeoDataFrame(df, crs=sitecrs, geometry=geometry)
+    #reproject if needed
     sitesreproj = sites.to_crs(crs=NDVIcrs)
     return sitesreproj
 
 def get_value_at_ndvi(ndvi_raster, pos):
-    gt = ndvi_raster.GetGeoTransform() #get geotransform from input raster
+    gt = ndvi_raster.GetGeoTransform() #get geotransform from input raster for extraction below
     data = np.array(ndvi_raster.ReadAsArray()).astype(np.float) #convert to numpy array
     x,y = list(map(int, (pos.geometry.x - gt[0])/gt[1])),list(map(int, (pos.geometry.y - gt[3])/gt[5])) #extract xy list of features in pos
     out = data[y,x] #create output
