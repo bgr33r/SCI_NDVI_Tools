@@ -1,5 +1,5 @@
 # SCI_NDVI_Tools
-Included here are a few tools for calculating NDVI at plots on Santa Cruz Island (SCI). Their purpose is to be part of a larger project where I am tracking changes in NDVI over time and space on SCI, and I wanted to create a small repository to hold copies of my scripts. 
+Included here are a few tools for calculating NDVI at plots on Santa Cruz Island (SCI). These tools are part of a larger project where I am tracking changes in NDVI over time and space on SCI. 
 
 These scripts will calculate NDVI using Landsat 8 data (NDVI_calc.py), and then find the NDVI for plots within the landsat scene (plot_intercept.py). I had hoped to include the raw scene data in this repo, but these data are far too large to store on github. I have tested these data on landsat scene LC80420362017279LGN00 which you can download here: https://earthexplorer.usgs.gov/. If you have difficulties, please contact me via the commments. 
 
