@@ -55,7 +55,7 @@ NIR_name = [s for s in filesindir if "B5" in s]  # NIR names
 RED_name = [s for s in filesindir if "B4" in s]  # RED names
 BQA_name = [s for s in filesindir if "BQA" in s]  #QA name
 
-NDVI = NDVI_calc('C://path//to//folder//', NIR_name, RED_name, BQA_name, 'NAN', 'NDVI.tif')
+NDVI = NDVI_calc('C://path//to//folder//', NIR_name, RED_name, BQA_name, 'NAN', 'NDVI.tif') #TODO test NDVI output as list
 
 #check output:
 test = gdal.Open('NDVI.tif')
